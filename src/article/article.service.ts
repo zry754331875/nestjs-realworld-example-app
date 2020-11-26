@@ -130,7 +130,7 @@ export class ArticleService {
 
   async favorite(id: number, slug: string): Promise<ArticleRO> {
     let article = await this.articleRepository.findOne({slug});
-    const user = await this.userRepository.findOne(id);
+    const user = await this.userRepository.findOne(id,{relations:['favorites']});
 
     const isNewFavorite = user.favorites.findIndex(_article => _article.id === article.id) < 0;
     if (isNewFavorite) {
